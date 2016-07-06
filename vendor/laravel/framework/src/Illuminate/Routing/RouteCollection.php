@@ -158,7 +158,20 @@ class RouteCollection implements Countable, IteratorAggregate
             return $this->getRouteForMethods($request, $others);
         }
 
-        \App\Services\CommonService::autoLoadPage();        
+        //第一次进行load并重新执行
+        $result = \App\Services\CommonService::autoLoadPage();        
+
+        //load失败，抛出异常
+        if ($result) 
+        {
+            $uri = $request->getRequestUri();
+            header('location:' . $uri);die;
+        }
+        //load image 重新redirect
+        else 
+        {
+            throw new NotFoundHttpException;
+        }
 
         throw new NotFoundHttpException;
     }

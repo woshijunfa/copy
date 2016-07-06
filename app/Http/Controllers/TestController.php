@@ -17,6 +17,7 @@ class TestController extends Controller
      */
     public function test()
     {
+    	die("test route");
         Auth::loginUsingId(8);
     }
 

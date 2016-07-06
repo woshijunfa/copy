@@ -64,6 +64,17 @@ class CommonService
         self::createDir($dir);
         $cmd = "cd " . $dir . " && wget " . $curlurl . ' && chmod 777 ' . $basename;
         exec($cmd);
+
+        //如果文件存在并且大小大于0则返回正确
+        $fileUrl = $dir . '/' . $basename;
+        if (file_exists($fileUrl) && filesize($fileUrl) > 0)
+        {
+            Log::info("Success load file:" . $fileUrl);
+            return true;
+        } 
+
+        //返回失败
+        return false;
     }
 
     public static function autoLoadHtml()

@@ -13,17 +13,16 @@ use Log;
 use Config;
 use Exception;
 
-$g_baseurl = "https://www.yuntiprivaten.com";
-$g_cookie = '_dallas_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiJTVjMDIxMjRkNjJjMmYyYmEyMWM5M2UyMDMyYTZjOWE4BjsAVEkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjsAVFsHWwZpAn6jSSIiJDJhJDEwJEJULnVzZzZ1NHlFV3QyakMvSENMY08GOwBUSSIQX2NzcmZfdG9rZW4GOwBGSSIxOVozMFNLOGEvc1o1ZGw1dEc5eVI1aU95QmlqWEFXa0xYMFJrdFJHUDZ6dz0GOwBG--bd810e7bf3acd6019a405fb6e62f3b4f5d97c689';
-$g_header = [
-            'Accept'=>'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Connection'=>'keep-alive',
-            'Accept-Language'=>'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4',
-            'Cache-Control'=>'no-cache',
-        ];
-
 class CommonService
 {
+    static $g_baseurl = "https://www.yuntiprivaten.com";
+    static $g_cookie = '_dallas_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiJTVjMDIxMjRkNjJjMmYyYmEyMWM5M2UyMDMyYTZjOWE4BjsAVEkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjsAVFsHWwZpAn6jSSIiJDJhJDEwJEJULnVzZzZ1NHlFV3QyakMvSENMY08GOwBUSSIQX2NzcmZfdG9rZW4GOwBGSSIxOVozMFNLOGEvc1o1ZGw1dEc5eVI1aU95QmlqWEFXa0xYMFJrdFJHUDZ6dz0GOwBG--bd810e7bf3acd6019a405fb6e62f3b4f5d97c689';
+    static $g_header = [
+                'Accept'=>'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'Connection'=>'keep-alive',
+                'Accept-Language'=>'en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4',
+                'Cache-Control'=>'no-cache',
+            ];
 
     public static function LogException($e)
     {
@@ -55,7 +54,7 @@ class CommonService
         }
         else return self::autoLoadHtml();
 
-        $curlurl = $g_baseurl . $uri;
+        $curlurl = self::$g_baseurl . $uri;
 
         $basename = basename(public_path() . $uri);
 
@@ -83,9 +82,9 @@ class CommonService
     	$simUri = $uri;
         if ($pos = strpos($uri,'?')) $simUri = substr($uri,0,$pos);
 
-    	$curlurl = $g_baseurl . $uri;
+    	$curlurl = self::$g_baseurl . $uri;
 
-        $curlService = new CurlService($curlurl,$g_header,$g_cookie);
+        $curlService = new CurlService($curlurl,self::$g_header,self::$g_cookie);
         $result = $curlService->get();
         if (!$result) return false;
 
